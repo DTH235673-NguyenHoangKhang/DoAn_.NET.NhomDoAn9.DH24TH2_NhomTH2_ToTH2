@@ -192,7 +192,7 @@ namespace QLCHThuocNongDuoc
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            for (int i = 0; i < txtSDTKH.Text.Length; i++)
+            for (int i = 0; i < txtSDTKH.Text.Trim().Length; i++)
             {
                 if (txtSDTKH.Text[i] < 48 || txtSDTKH.Text[i] > 57)
                 {
@@ -230,8 +230,8 @@ namespace QLCHThuocNongDuoc
             txtSDTKH.Clear();
             ds.Tables["tblKhachHang"].Clear();
             string sql = $"select makh,tenkh,sodienthoaikh, diachikh from khachhang where tinhtrang=1";
-            daKhachHang = new SqlDataAdapter(sql, conn);
-            daKhachHang.Fill(ds, "tblKhachHang");
+            SqlDataAdapter tam = new SqlDataAdapter(sql, conn);
+            tam.Fill(ds, "tblKhachHang");
             dgDSKhachHang.DataSource = ds.Tables["tblKhachHang"];
         }
 
@@ -249,10 +249,9 @@ namespace QLCHThuocNongDuoc
                 {
                     check = 1;
                     ds.Tables["tblKhachHang"].Clear();
-                    ds.Tables.Remove("tblKhachHang");
                     string sql = $"select makh,tenkh,sodienthoaikh, diachikh from khachhang where tinhtrang=1 and sodienthoaikh='{txtMaTim.Text}'";
-                    daKhachHang = new SqlDataAdapter(sql, conn);
-                    daKhachHang.Fill(ds, "tblKhachHang");
+                    SqlDataAdapter tam = new SqlDataAdapter(sql, conn);
+                    tam.Fill(ds, "tblKhachHang");
                     dgDSKhachHang.DataSource = ds.Tables["tblKhachHang"];
 
                 }

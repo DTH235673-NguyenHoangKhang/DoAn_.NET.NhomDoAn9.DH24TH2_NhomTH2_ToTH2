@@ -207,7 +207,7 @@ namespace QLCHThuocNongDuoc
                     MessageBox.Show("Bạn vui lòng nhập đầy đủ thông tin");
                     return;
                 }
-                for (int i = 0; i < txtSDT.Text.Length; i++)
+                for (int i = 0; i < txtSDT.Text.Trim().Length; i++)
                 {
                     if (txtSDT.Text[i] < 48 || txtSDT.Text[i] > 57)
                     {
@@ -255,8 +255,8 @@ namespace QLCHThuocNongDuoc
             txtMaNV.Focus();
             ds.Tables["tblNhanVien"].Clear();
             string sql = $"select manv,tennv,diachinv,sodienthoai from nhanvien where tinhtrang=1 ";
-            daNhanVien = new SqlDataAdapter(sql, conn);
-            daNhanVien.Fill(ds, "tblNhanVien");
+            SqlDataAdapter tam = new SqlDataAdapter(sql, conn);
+            tam.Fill(ds, "tblNhanVien");
             dgDSNhanVien.DataSource = ds.Tables["tblNhanVien"];
             MessageBox.Show("Hủy thành công");
 
@@ -275,10 +275,9 @@ namespace QLCHThuocNongDuoc
                 {
                     check = 1;
                     ds.Tables["tblNhanVien"].Clear();
-                    ds.Tables.Remove("tblNhanVien");
                     string sql = $"select manv,tennv,diachinv,sodienthoai from nhanvien where tinhtrang=1 and manv='{txtMaTim.Text}'";
-                    daNhanVien = new SqlDataAdapter(sql, conn);
-                    daNhanVien.Fill(ds, "tblNhanVien");
+                    SqlDataAdapter tam= new SqlDataAdapter(sql, conn);
+                    tam.Fill(ds, "tblNhanVien");
                     dgDSNhanVien.DataSource = ds.Tables["tblNhanVien"];
                 }
             if (check == 0)

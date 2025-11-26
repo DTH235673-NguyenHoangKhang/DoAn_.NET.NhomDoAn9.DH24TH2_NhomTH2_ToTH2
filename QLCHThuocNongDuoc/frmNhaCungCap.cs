@@ -209,8 +209,8 @@ namespace QLCHThuocNongDuoc
             txtMaNCC.Enabled = true;
             ds.Tables["tblNhaCungCap"].Clear();
             string sql = $"SELECT manhacungcap,tenncc,diachincc,sodienthoaincc FROM NhaCungCap where tinhtrang=1";
-            daNCC = new SqlDataAdapter(sql, conn);
-            daNCC.Fill(ds, "tblNhaCungCap");
+            SqlDataAdapter tam = new SqlDataAdapter(sql, conn);
+            tam.Fill(ds, "tblNhaCungCap");
             dgDSNhaCungCap.DataSource = ds.Tables["tblNhaCungCap"];
         }
 
@@ -239,10 +239,9 @@ namespace QLCHThuocNongDuoc
                 {
                     check = 1;
                     ds.Tables["tblNHaCungCap"].Clear();
-                    ds.Tables.Remove("tblNhaCungCap");
                     string sql = $"SELECT manhacungcap,tenncc,diachincc,sodienthoaincc FROM NhaCungCap where tinhtrang=1 and manhacungcap='{txtMaTim.Text}'";
-                    daNCC = new SqlDataAdapter(sql, conn);
-                    daNCC.Fill(ds, "tblNhaCungCap");
+                    SqlDataAdapter tam = new SqlDataAdapter(sql, conn);
+                    tam.Fill(ds, "tblNhaCungCap");
                     dgDSNhaCungCap.DataSource = ds.Tables["tblNhaCungCap"];
 
                 }

@@ -340,8 +340,8 @@ namespace QLCHThuocNongDuoc
             ds.Tables["tblDSThuoc"].Clear();
             string sql = @"select t.*, l.TenLoaiThuoc, d.TenDonVi, n.TenNCC from Thuoc t, LoaiThuoc l, DonViTinh d, NhaCungCap n "
                           + $"where t.MaLT=l.MaLT and t.MaDVT=d.MaDVT and t.MaNhaCungCap=n.MaNhaCungCap ";
-            daThuoc = new SqlDataAdapter(sql, conn);
-            daThuoc.Fill(ds, "tblDSThuoc");
+            SqlDataAdapter tam = new SqlDataAdapter(sql, conn);
+            tam.Fill(ds, "tblDSThuoc");
             dgDSThuocNongDuoc.DataSource = ds.Tables["tblDSThuoc"];
             MessageBox.Show("Hủy thay đổi thành công", "Thông báo");
         }
@@ -400,11 +400,10 @@ namespace QLCHThuocNongDuoc
                 {
                     check = 1;
                     ds.Tables["tblDSThuoc"].Clear();
-                    ds.Tables.Remove("tblDSThuoc");
                     string sql = @"select t.*, l.TenLoaiThuoc, d.TenDonVi, n.TenNCC from Thuoc t, LoaiThuoc l, DonViTinh d, NhaCungCap n "
                                   +$"where t.MaLT=l.MaLT and t.MaDVT=d.MaDVT and t.MaNhaCungCap=n.MaNhaCungCap and mathuoc='{txtMaTim.Text}'";
-                    daThuoc = new SqlDataAdapter(sql, conn);
-                    daThuoc.Fill(ds, "tblDSThuoc");
+                    SqlDataAdapter tam = new SqlDataAdapter(sql, conn);
+                    tam.Fill(ds, "tblDSThuoc");
                     dgDSThuocNongDuoc.DataSource = ds.Tables["tblDSThuoc"];
                 }
             if (check == 0)

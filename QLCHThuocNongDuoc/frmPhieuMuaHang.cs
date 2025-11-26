@@ -190,8 +190,9 @@ namespace QLCHThuocNongDuoc
                                 select distinct p.SoPhieuMuaHang,  p.MaNV, n.TenNV,p.MaKH,k.TenKH,k.SoDienThoaiKH,k.DiaChiKH, p.NgayMuaHang, p.TongTien
                              from Khachhang k,phieumuahang p,nhanvien n
                              where k.MaKH=p.MaKH and p.MaNV=n.MaNV  ";
-            daPhieuMuaHang = new SqlDataAdapter(sQueryPhieuMuaHang, conn);
-            daPhieuMuaHang.Fill(ds, "tblPhieuMuaHang");
+            ds.Tables["tblPhieuMuaHang"].Clear();
+            SqlDataAdapter tam = new SqlDataAdapter(sQueryPhieuMuaHang, conn);
+            tam.Fill(ds, "tblPhieuMuaHang");
             dgDSPhieuMuaHnag.DataSource = ds.Tables["tblPhieuMuaHang"];
         }
 
@@ -431,8 +432,8 @@ namespace QLCHThuocNongDuoc
             string sQueryPhieuMuaHang = $@"select distinct p.SoPhieuMuaHang,  p.MaNV, n.TenNV,p.MaKH,k.TenKH,k.SoDienThoaiKH,k.DiaChiKH, p.NgayMuaHang, p.TongTien
                              from Khachhang k,phieumuahang p,nhanvien n
                              where k.MaKH=p.MaKH and p.MaNV=n.MaNV";
-            daPhieuMuaHang = new SqlDataAdapter(sQueryPhieuMuaHang, conn);
-            daPhieuMuaHang.Fill(ds, "tblPhieuMuaHang");
+            SqlDataAdapter tam = new SqlDataAdapter(sQueryPhieuMuaHang, conn);
+            tam.Fill(ds, "tblPhieuMuaHang");
             dgDSPhieuMuaHnag.DataSource = ds.Tables["tblPhieuMuaHang"];
         }
 
@@ -446,12 +447,11 @@ namespace QLCHThuocNongDuoc
                 {
                     check = 1;
                     ds.Tables["tblPhieuMuaHang"].Clear();
-                    ds.Tables.Remove("tblPhieuMuaHang");
                     string sQueryPhieuMuaHang = $@"select distinct p.SoPhieuMuaHang,  p.MaNV, n.TenNV,p.MaKH,k.TenKH,k.SoDienThoaiKH,k.DiaChiKH, p.NgayMuaHang, p.TongTien
                              from Khachhang k,phieumuahang p,nhanvien n
                              where k.MaKH=p.MaKH and p.MaNV=n.MaNV and sophieumuahang={Convert.ToInt32(txtMaTim.Text)}";
-                    daPhieuMuaHang = new SqlDataAdapter(sQueryPhieuMuaHang, conn);
-                    daPhieuMuaHang.Fill(ds, "tblPhieuMuaHang");
+                    SqlDataAdapter tam = new SqlDataAdapter(sQueryPhieuMuaHang, conn);
+                    tam.Fill(ds, "tblPhieuMuaHang");
                     dgDSPhieuMuaHnag.DataSource = ds.Tables["tblPhieuMuaHang"];
                 }
             if (check == 0)

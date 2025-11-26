@@ -238,7 +238,7 @@ namespace QLCHThuocNongDuoc
                 " where p.MaNhaCungCap=ncc.MaNhaCungCap and p.MaNV=n.MaNV   ";
             SqlCommand cmdSelect = new SqlCommand(sQueryPhieuNhapHang, conn);
             SqlDataAdapter tempDa = new SqlDataAdapter(cmdSelect);
-            tempDa.Fill(ds, "tblPhieuNhapHang"); // Fill dữ liệu mới
+            tempDa.Fill(ds, "tblPhieuNhapHang"); 
             dgDSPhieuNhapHang.DataSource = ds.Tables["tblPhieuNhapHang"];
         }
 
@@ -389,8 +389,9 @@ namespace QLCHThuocNongDuoc
             string sql = "select distinct p.trangthai,p.SoPhieuNhapHang,  p.MaNV, n.TenNV,p.MaNhaCungCap,ncc.TenNCC,ncc.SoDienThoaiNCC,ncc.DiaChiNCC,p.NgaylapphieuNhap,p.tongtien  " +
                          " from NhaCungCap ncc,PhieuNhapHang p,nhanvien n " +
                         $" where p.MaNhaCungCap=ncc.MaNhaCungCap and p.MaNV=n.MaNV";
-            daPhieuNhapHang = new SqlDataAdapter(sql, conn);
-            daPhieuNhapHang.Fill(ds, "tblPhieuNhapHang");
+            SqlCommand cmdSelect = new SqlCommand(sql, conn);
+            SqlDataAdapter tempDa = new SqlDataAdapter(cmdSelect);
+            tempDa.Fill(ds, "tblPhieuNhapHang");
             dgDSPhieuNhapHang.DataSource = ds.Tables["tblPhieuNhapHang"];
         }
         private void btnAlterNV_Click(object sender, EventArgs e)
@@ -438,12 +439,12 @@ namespace QLCHThuocNongDuoc
                 {
                     check = 1;
                     ds.Tables["tblPhieuNhapHang"].Clear();
-                    ds.Tables.Remove("tblPhieuNhapHang");
                     string sql = "select distinct p.trangthai,p.SoPhieuNhapHang,  p.MaNV, n.TenNV,p.MaNhaCungCap,ncc.TenNCC,ncc.SoDienThoaiNCC,ncc.DiaChiNCC,p.NgaylapphieuNhap,p.tongtien  " +
                                  " from NhaCungCap ncc,PhieuNhapHang p,nhanvien n " +
                                  $" where p.MaNhaCungCap=ncc.MaNhaCungCap and p.MaNV=n.MaNV and sophieunhaphang={Convert.ToInt32(txtMaTim.Text)}";
-                    daPhieuNhapHang = new SqlDataAdapter(sql, conn);
-                    daPhieuNhapHang.Fill(ds, "tblPhieuNhapHang");
+                    SqlCommand cmdSelect = new SqlCommand(sql, conn);
+                    SqlDataAdapter tempDa = new SqlDataAdapter(cmdSelect);
+                    tempDa.Fill(ds, "tblPhieuNhapHang");
                     dgDSPhieuNhapHang.DataSource = ds.Tables["tblPhieuNhapHang"];
                 }
             if (check == 0)
