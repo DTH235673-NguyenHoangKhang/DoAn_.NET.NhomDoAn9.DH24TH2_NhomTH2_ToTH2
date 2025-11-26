@@ -44,7 +44,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtGiaNhap = new System.Windows.Forms.TextBox();
-            this.btnDanhSachthuoc = new System.Windows.Forms.Button();
             this.btnXuatPhieuNhap = new System.Windows.Forms.Button();
             this.txtTongTien = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -208,16 +207,6 @@
             this.txtGiaNhap.Size = new System.Drawing.Size(141, 22);
             this.txtGiaNhap.TabIndex = 43;
             // 
-            // btnDanhSachthuoc
-            // 
-            this.btnDanhSachthuoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDanhSachthuoc.Location = new System.Drawing.Point(670, 96);
-            this.btnDanhSachthuoc.Name = "btnDanhSachthuoc";
-            this.btnDanhSachthuoc.Size = new System.Drawing.Size(185, 37);
-            this.btnDanhSachthuoc.TabIndex = 44;
-            this.btnDanhSachthuoc.Text = "Danh sách thuốc";
-            this.btnDanhSachthuoc.UseVisualStyleBackColor = true;
-            // 
             // btnXuatPhieuNhap
             // 
             this.btnXuatPhieuNhap.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -268,7 +257,6 @@
             this.Controls.Add(this.btnXuatPhieuNhap);
             this.Controls.Add(this.txtTongTien);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.btnDanhSachthuoc);
             this.Controls.Add(this.txtGiaNhap);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dgDSCTPNH);
@@ -312,7 +300,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtGiaNhap;
-        private System.Windows.Forms.Button btnDanhSachthuoc;
         private System.Windows.Forms.Button btnXuatPhieuNhap;
         private System.Windows.Forms.TextBox txtTongTien;
         private System.Windows.Forms.Label label8;
