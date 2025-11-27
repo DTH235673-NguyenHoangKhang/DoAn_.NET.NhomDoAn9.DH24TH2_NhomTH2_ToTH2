@@ -174,7 +174,7 @@ namespace QLCHThuocNongDuoc
             if (dgDSCTPMH.SelectedRows.Count > 0)
             {
                 DataGridViewRow d = dgDSCTPMH.SelectedRows[0];
-                dgDSCTPMH.Rows.Remove(d);
+                DataRow row = ds.Tables["tblChiTietPhieuMuaHang"].Rows.Find(new object[] { int.Parse(d.Cells["SoPhieuMuaHang"].Value.ToString()), d.Cells["MaThuoc"].Value.ToString() });
                 daChiTietPhieuMuaHang.Update(ds, "tblChiTietPhieuMuaHang");
                 cboLoaiThuoc.SelectedIndex = 0;
                 cboTenThuoc.SelectedIndex = 0;
@@ -194,13 +194,12 @@ namespace QLCHThuocNongDuoc
 
                 }
                 txtTongTien.Text = tongtien.ToString();
-                MessageBox.Show("Xóa thành công");
-                DataRow[] r=dt.Select($"SoPhieuMuaHang={txtSoPhieuMuaHang.Text}");
-                int vitri = int.Parse(r[0]["stt"].ToString());
-                for (int i = vitri; i <= dgDSCTPMH.Rows.Count; i++)
+                int vitri = int.Parse(row["stt"].ToString());
+                for (int i = vitri; i < dgDSCTPMH.Rows.Count; i++)
                 {
                     dgDSCTPMH.Rows[i].Cells["stt"].Value = i;
                 }
+                dgDSCTPMH.Rows.Remove(d);
                 daChiTietPhieuMuaHang.Update(ds, "tblChiTietPhieuMuaHang");
             }
         }

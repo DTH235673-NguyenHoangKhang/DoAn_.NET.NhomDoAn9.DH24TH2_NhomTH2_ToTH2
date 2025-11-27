@@ -130,6 +130,11 @@ namespace QLCHThuocNongDuoc
                 MessageBox.Show("Thuốc đã tồn tại trong phiếu nhập hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (int.Parse(txtSoLuong.Text) <= 0)
+            {
+                MessageBox.Show("Số lượng phải lớn hơn 0!", "Thông báo");
+                return;
+            }
             DataRow row = ds.Tables["tblChiTietPhieuNhapHang"].NewRow();
             row["stt"] = ds.Tables["tblChiTietPhieuNhapHang"].Rows.Count + 1;
             row["SoPhieuNhapHang"] = txtSoPhieuNhapHang.Text;
@@ -163,20 +168,31 @@ namespace QLCHThuocNongDuoc
                 return;
             }
             DataGridViewRow row = dgDSCTPNH.SelectedRows[0];
-            dgDSCTPNH.Rows.Remove(row);
+            DataRow drow = ds.Tables["tblChiTietPhieuNhapHang"].Rows.Find(new object[] { row.Cells["MaThuoc"].Value.ToString(), txtSoPhieuNhapHang.Text });
             daChiTietPhieuNhapHang.Update(ds, "tblChiTietPhieuNhapHang");
             cboLoaiThuoc.SelectedIndex = -1;
             cboTenThuoc.SelectedIndex = -1;
             txtSoLuong.Clear();
             txtGiaNhap.Clear();
             txtSoPhieuNhapHang.Enabled = true;
+            int tongtien = 0;
             DataTable dt = ds.Tables["tblChiTietPhieuNhapHang"];
-            DataRow[] r = dt.Select($"SoPhieuNhapHang={txtSoPhieuNhapHang.Text}");
-            int vitri = int.Parse(r[0]["stt"].ToString());
-            for (int i = vitri; i <= dgDSCTPNH.Rows.Count; i++)
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string maphieu = dt.Rows[i]["SoPhieuNhapHang"].ToString();
+                    DataRow[] rows = dt.Select($"SoPhieuNhapHang='{maphieu}'");
+                    tongtien += int.Parse(rows[0]["ThanhTien"].ToString());
+                }
+
+            }
+            int vitri = int.Parse(drow["stt"].ToString());
+            for (int i = vitri; i < dgDSCTPNH.Rows.Count; i++)
             {
                 dgDSCTPNH.Rows[i].Cells["stt"].Value = i;
             }
+            dgDSCTPNH.Rows.Remove(row);
             daChiTietPhieuNhapHang.Update(ds, "tblChiTietPhieuNhapHang");
         }
         private void btnSua_Click(object sender, EventArgs e)
@@ -184,6 +200,11 @@ namespace QLCHThuocNongDuoc
             if (dgDSCTPNH.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Vui lòng chọn thuốc cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (int.Parse(txtSoLuong.Text) <= 0)
+            {
+                MessageBox.Show("Số lượng phải lớn hơn 0!", "Thông báo");
                 return;
             }
             DataGridViewRow row = dgDSCTPNH.SelectedRows[0];

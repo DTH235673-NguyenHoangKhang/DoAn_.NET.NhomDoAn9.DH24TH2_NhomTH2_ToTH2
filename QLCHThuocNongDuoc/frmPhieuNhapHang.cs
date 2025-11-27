@@ -213,12 +213,23 @@ namespace QLCHThuocNongDuoc
             fctpn.ShowDialog();
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = @"Data Source=ACER\SQLEXPRESS;Initial Catalog=QLCHMBTND;Integrated Security=True";
+            string soPhieu = txtSoPhieuNhapHang.Text;
+            string sUpdateTongTien = $@"
+        UPDATE PhieuNhapHang
+        SET TongTien = ISNULL((
+            SELECT SUM(SoLuong * GiaBan) 
+            FROM ChiTietPhieuNhapHang,thuoc 
+            WHERE ChiTietPhieuNhapHang.MaThuoc = thuoc.MaThuoc 
+            AND SoPhieuNhapHang = '{soPhieu}'), 0)
+        WHERE SoPhieuNhapHang = '{soPhieu}';";
+            SqlCommand cmdUpdateTongTien = new SqlCommand(sUpdateTongTien, conn);
+            cmdUpdateTongTien.ExecuteNonQuery();
             dgDSPhieuNhapHang.DataSource = null;
-            string sdelete= @"delete from phieunhaphang where tongtien=0";
+            string sdelete= $@" delete from chitietphieunhaphang where sophieunhaphang='{txtSoPhieuNhapHang.Text}'
+                                delete from phieunhaphang where tongtien=0";
             SqlCommand cmddelete = new SqlCommand(sdelete, conn);
             try
             {
-                conn.Open();
                 cmddelete.ExecuteNonQuery();
             }
             catch (Exception ex)

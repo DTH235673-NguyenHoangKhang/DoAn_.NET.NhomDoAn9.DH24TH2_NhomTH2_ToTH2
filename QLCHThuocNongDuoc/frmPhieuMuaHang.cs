@@ -181,12 +181,27 @@ namespace QLCHThuocNongDuoc
             }
             frmChiTietPhieuMuaHang formChiTiet = new frmChiTietPhieuMuaHang(int.Parse(txtSoPhieuMuaHang.Text));
             formChiTiet.ShowDialog();
-
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = @"Data Source=ACER\SQLEXPRESS;Initial Catalog=QLCHMBTND;Integrated Security=True";
+            string soPhieu = txtSoPhieuMuaHang.Text;
+            string sUpdateTongTien = $@"
+        UPDATE PhieuMuaHang
+        SET TongTien = ISNULL((
+            SELECT SUM(SoLuong * GiaBan) 
+            FROM ChiTietPhieuMuaHang,thuoc 
+            WHERE ChiTietPhieuMuaHang.MaThuoc = thuoc.MaThuoc 
+            AND SoPhieuMuaHang = '{soPhieu}'), 0)
+        WHERE SoPhieuMuaHang = '{soPhieu}';";
+            SqlCommand cmdUpdateTongTien = new SqlCommand(sUpdateTongTien, conn);
+            conn.Open();
+            cmdUpdateTongTien.ExecuteNonQuery();
             dgDSPhieuMuaHnag.DataSource = null;
             ds.Tables["tblPhieuMuaHang"].Rows.Clear();
-            string sQueryPhieuMuaHang = @"delete from phieumuahang where tongtien=0
+            string sql = $@" delete from chitietphieumuahang where sophieumuahang='{txtSoPhieuMuaHang.Text}'
+                                   delete from phieumuahang where tongtien=0";
+            SqlCommand xoa = new SqlCommand(sql, conn);
+            xoa.ExecuteNonQuery();
+            string sQueryPhieuMuaHang = $@" 
                                 select distinct p.SoPhieuMuaHang,  p.MaNV, n.TenNV,p.MaKH,k.TenKH,k.SoDienThoaiKH,k.DiaChiKH, p.NgayMuaHang, p.TongTien
                              from Khachhang k,phieumuahang p,nhanvien n
                              where k.MaKH=p.MaKH and p.MaNV=n.MaNV  ";
@@ -228,7 +243,6 @@ namespace QLCHThuocNongDuoc
                 SqlCommand u = new SqlCommand(ut, conn);
                 conn.Open();
                 u.ExecuteNonQuery();
-                conn.Close();
                 DataGridViewRow dr = dgDSPhieuMuaHnag.SelectedRows[0];
                 dgDSPhieuMuaHnag.Rows.Remove(dr);
                 txtSoPhieuMuaHang.Clear();
