@@ -200,7 +200,7 @@ namespace QLCHThuocNongDuoc
         }
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (dgDSNhanVien.Rows.Count > 0)
+            if (dgDSNhanVien.SelectedRows.Count > 0)
             {
                 if (txtMaNV.Text == "" || txtTen.Text == "" || txtDiaChi.Text == "" || txtSDT.Text == "")
                 {
