@@ -217,12 +217,13 @@ namespace QLCHThuocNongDuoc
             string sUpdateTongTien = $@"
         UPDATE PhieuNhapHang
         SET TongTien = ISNULL((
-            SELECT SUM(SoLuong * GiaBan) 
+            SELECT SUM(SoLuong * GiaNhap) 
             FROM ChiTietPhieuNhapHang,thuoc 
             WHERE ChiTietPhieuNhapHang.MaThuoc = thuoc.MaThuoc 
             AND SoPhieuNhapHang = '{soPhieu}'), 0)
         WHERE SoPhieuNhapHang = '{soPhieu}';";
             SqlCommand cmdUpdateTongTien = new SqlCommand(sUpdateTongTien, conn);
+            conn.Open();
             cmdUpdateTongTien.ExecuteNonQuery();
             dgDSPhieuNhapHang.DataSource = null;
             string sdelete= $@" delete from chitietphieunhaphang where sophieunhaphang='{txtSoPhieuNhapHang.Text}'
